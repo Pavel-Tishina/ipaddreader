@@ -89,26 +89,14 @@ public class Main {
 
                 int lastNL = sb.lastIndexOf("\n");
                 int size = sb.length();
-/*
-                Stream.of(sb.substring(0, lastNL).split("\n"))
-                        .parallel()
-                        .filter(StrUtil::notNullOrBlank)
-                        .filter(ip -> !cfg.isChkIp() || StrUtil.okIP(ip))
-                        .mapToInt(IpUtil::pack)
-                        .sequential()
-                        //.boxed()
-                        .forEach(uniqAddr::add);
 
- */
                 Stream.of(sb.substring(0, lastNL).split("\n"))
-                        //.parallel()
                         .flatMapToInt(ip -> {
                             if (StrUtil.notNullOrBlank(ip) && (!cfg.isChkIp() || StrUtil.okIP(ip)))
                                 return IntStream.of(IpUtil.pack(ip));
 
                             return IntStream.empty();
                         })
-                        //.forEach(uniqAddr::addSync);
                         .forEach(uniqAddr::add);
 
                 for (int i = 0; i < size - lastNL; i++)
