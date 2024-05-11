@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConfigTest {
     private static final String PATH_ROOT_DIR = System.getProperty("user.dir") + "/src/test";
@@ -89,7 +90,7 @@ public class ConfigTest {
         String[] setBS = {"-bs='-1'"};
 
         CFG = new Config(setBS);
-        assertEquals(BS_DEFAULT, CFG.getBs());
+        assertEquals(1, CFG.getBs());
 
         CFG.setBs("0");
         assertEquals(BS_DEFAULT, CFG.getBs());
@@ -102,6 +103,38 @@ public class ConfigTest {
 
         CFG.setBs(Integer.toString(BS_128));
         assertEquals(BS_128, CFG.getBs());
+    }
+
+    @Test
+    public void infoTest() {
+        String[] arg = {"-bs='4M'", "-chk", "-out='" + TEST_OUT_FILE + "'",
+                "-ipfile='" + TEST_FILE + "'", "-mode='once'", "-read='block'"};
+
+        String infoString = "Ok, let's start a challenge!\n" +
+                "\tIpFile: 'E:\\JavaDev\\ipaddreader/src/test/resources/test_file'\n" +
+                "\tWorkMode: ONCE\n" +
+                "\tReadMode: BLOCK\n" +
+                "\tCheck incoming ip: true\n" +
+                "\tBlock size: 4194304\n" +
+                "\tSave ip result file: 'E:\\JavaDev\\ipaddreader/src/test/resources/test_out_file'";
+
+        createFile(TEST_FILE);
+        createFile(TEST_OUT_FILE);
+        CFG = new Config(arg);
+
+        assertEquals(infoString, CFG.info());
+    }
+
+    @Test
+    public void isOkTest() {
+        String[] arg = {"-bs='4M'", "-chk", "-out='" + TEST_OUT_FILE + "'",
+                "-ipfile='" + TEST_FILE + "'", "-mode='once'", "-read='block'"};
+
+        createFile(TEST_FILE);
+        createFile(TEST_OUT_FILE);
+        CFG = new Config(arg);
+
+        assertTrue(CFG.isOk());
     }
 
     private void createFile(String source) {

@@ -51,11 +51,7 @@ public class Config {
 
 
     public void setBs(String v) {
-        try {
-            this.bs = Integer.parseInt(v);
-        } catch (Exception e) {
-            this.bs = 8 << 20;
-        }
+        this.bs = StrUtil.parseBlockSizeValue(v);
 
         if (this.bs < 1 || this.bs > (Runtime.getRuntime().freeMemory() << 3))
             this.bs = 8 << 20;
@@ -66,7 +62,7 @@ public class Config {
     }
 
     public boolean isOk() {
-        return StrUtil.notNullOrBlank(this.ipFile);
+        return getErrors().isEmpty();
     }
 
     public Set<String> getErrors() {
