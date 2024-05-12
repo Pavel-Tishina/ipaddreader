@@ -11,7 +11,7 @@ This program count unique ip-address from file. File can be large like <code><a 
         </p>
         <p>
             For example we have next ip address in file:
-            <div style="background: #20200b; weight: 10%">
+            <div style="background: #20200b">
                 1.1.1.1
                 </br>2.2.2.2
                 </br>3.3.3.3
@@ -24,7 +24,7 @@ This program count unique ip-address from file. File can be large like <code><a 
                 <li>
                     Just met in parsing process
                     <div>
-                        <div style="background: #20200b; weight: 10%">
+                        <div style="background: #20200b">
                             <span style="color: green">
                                 <b>1.1.1.1
                                 </br>2.2.2.2
@@ -37,7 +37,7 @@ This program count unique ip-address from file. File can be large like <code><a 
                 <li>
                     Appear in file only once
                     <div>
-                        <div style="background: #20200b; weight: 10%">
+                        <div style="background: #20200b">
                             <span style="color: pink">1.1.1.1</span>
                             </br><span style="color: green"><b>2.2.2.2
                             </br>3.3.3.3</b></span>
