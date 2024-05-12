@@ -2,7 +2,7 @@
 
 This program count unique ip-address from file. File can be large like <code><a href="https://ecwid-vgv-storage.s3.eu-central-1.amazonaws.com/ip_addresses.zip">this one</a></code>.
 
-<details open>
+<details close>
     <summary>Two cents about a task</summary>
     <div>
         <p>
@@ -57,7 +57,7 @@ This program count unique ip-address from file. File can be large like <code><a 
 <hr>
 <h2>How it works?</h2>
 
-<details open>
+<details close>
     <summary>Theory</summary>
     <div>
         <p>
@@ -86,7 +86,7 @@ This program count unique ip-address from file. File can be large like <code><a 
     </div>
 </details>
 
-<details>
+<details close>
     <summary>Practice</summary>
     <p>
         <p>
@@ -197,7 +197,7 @@ This program count unique ip-address from file. File can be large like <code><a 
 <p>
     Enjoy!
 </p>
-<details open>
+<details close>
     <summary>About an arguments</summary>
     <div>
         Here is next arguments that change mode of work, read and so on:
@@ -251,7 +251,7 @@ This program count unique ip-address from file. File can be large like <code><a 
         </ul>
     </div>
 </details>
-<details open id="#javatuning">
+<details close>
     <summary>Java tuning</summary>
     <div>
         <p>
