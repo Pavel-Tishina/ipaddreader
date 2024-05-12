@@ -62,19 +62,22 @@ This program count unique ip-address from file. File can be large like <code><a 
     <div>
         <p>
             Ok. How we can count unique ip-address?
-            First idea what comes like <code>awk sort | uniq</code>, <b>oh yeah, we did it</b>!!! But we go another way. We don't use any database, 
-            cloud-services, hdfs <i>(well, that maybe an interesting idea)</i> and any modern features and look up to the old-good past
-            and remember C, Assembler, bits, registers, memory indexing and another stuff looks like that... machine code =)...
+            First idea what comes is <code>awk sort | uniq</code>, <b>oh yeah, we did it</b>!!! But we take a different approach. We're not using any fancy stuff like databases, 
+            cloud services, or modern features. Instead, we're looking back to the old days and thinking about basic things like C, Assembler, bits, registers, memory indexing, 
+            and other similar stuff.... machine code =)...
         </p>
         <p>
-            Ok, let's try to imagine, that we can read all ip-address from file into memory (without dumps) and check unique
-            and use only one foreach for this... Hmm... All ip-address has average length from 7 bytes per address like 0.0.0.0
-            to 15 bytes per address 255.255.255.255... The smallest size for all is 7 * 4294967296 (all possible ipv4) = 30064771072
-            (or around of 28,67gb). Well, not too much today, but still huge.
+            Alright, let's imagine that we can read all IP addresses from the file directly into memory (without dumbs) and then check for uniqueness using just one loop. Each IP address 
+            typically takes between <b>7</b> to <b>15</b> bytes, ranging from addresses like <b>0.0.0.0</b> to <b>255.255.255.255</b>. So, the total size for all possible IPv4 addresses 
+            is 7 * 4294967296 (all possible IPv4) = 30064771072 bytes (and it's just a minimum! we calculate as all ips takes 7 bytes), which is roughly 28.67 GB. 
+            Well, that's not too much for today's standards, but it's still quite huge.
         </p>
         <p>
             Hmm... How about "compress" them to 512mb?
-            /// picture of title///
+            </br>
+            <picture>
+                <img src="https://iili.io/J6fOCwF.jpg" alt="J6fOCwF.jpg" border="0" />
+            </picture>
         </p>
         <p>
             We don't need store ip address as is, only information about his apperiance.
@@ -90,18 +93,15 @@ This program count unique ip-address from file. File can be large like <code><a 
     <summary>Practice</summary>
     <p>
         <p>
-            If we use <code>String[]</code> - 7 - 15 bytes per element - it's too much, but each ip's octet is 1-byte [0..255], so 
-            we can pack ip to <code>int</code>, and it turns to 4 bytes - 4 * 4294967296 = 17179869184 (16gb). looks better, but not
-            enough. But keep this packed ip, it would be useful in the future.
-            // picture str - to int //
-        </p>
-        <p>
             If we just keep only fact of appear any ip - we need only one bit [0 - not appear, 1 - appear], and need only 4294967296
             bits - only 512mb. Looks interesting... but how keep it?
         </p>
         <p>
+            There 
+        </p>
+        <p>
             The biggest primitive type in Java is 8-byte <code>long</code>, so we can keep information about 64 different
-            ip-address in one long and now need 4294967296 / 64 = 67108864 elements.
+            ip-address in one long and now need <code>4294967296 / 64 = 67108864</code> elements.
             Ok, init 2 arrays (cuz Java hasn't unsign type)
             <p>
                 <div style="background: #20200b">
@@ -113,13 +113,17 @@ This program count unique ip-address from file. File can be large like <code><a 
         <p>
             And here start a magic:
             <ul>
-                <li>we count index of long[] element from first 24bit of our int-ip - call it bank</li>
-                <li>next we need index for position in elements bit - we use last 8bits of our int-ip, call it cell</li>
+                <li>we count index of long[] element from first 28bit of our int-ip - call it bank</li>
+                <li>next we need index for position in elements bit - we use last 4bits of our int-ip, call it cell</li>
                 <li>if stored bit is 0 - we have a new unique ip-address. So inceremnt a count variable and store 1 to the cell</li>
             </ul>
         </p>
         <p>
             <b>And this is all what we need!</b>
+            <p>
+                In the form of a diagram, this process will look like this:
+                </br><img src="https://iili.io/J6qCOa1.png" alt="J6qCOa1.png" border="0" />
+            </p>
         </p>
         <p>
             If we want to get back all unique ip's in readible format we need:
@@ -134,7 +138,7 @@ This program count unique ip-address from file. File can be large like <code><a 
         </p>
         <p>
             But wait a minute, what about a second <i>once</i> implementation? That looks the same, but we need now 2 bits
-            for store 3 state: 00 - not exist, 01 - exist once, 11 - exist more than once. So we can store now only 32 
+            for store 3 state: <b>00</b> - not exist, <b>01</b> - exist once, <b>11</b> - exist more than once. So we can store now only 32 
             address into one long <i>(in theory a little bit more, around 40, and I'm thinking about it)</i>
         </p>
         <p>
@@ -203,11 +207,11 @@ This program count unique ip-address from file. File can be large like <code><a 
         Here is next arguments that change mode of work, read and so on:
         <ul>
             <li>
-                <span style="color: gold; background: darkblue"><b>-ipfile='</b><i>/path/to/your/file</i><b>'</b></span>
+                <code><b>-ipfile='</b><i>/path/to/your/file</i><b>'</b></code>
                 <p>Only one <b>requred</b> argument, contains path to your file with <u>ip-addresses</u></p>
             </li>
             <li>
-                <span style="background: darkblue"><b>-mode='</b><i><b>ALL</b> or <b>ONCE</b></i><b>'</b></span>
+                <code><b>-mode='</b><i><b>ALL</b> or <b>ONCE</b></i><b>'</b></code>
                 <p>
                     ALL - count all unique ip addresses (need more 512mb RAM) <i>[default]</i>
                 </p>
@@ -216,7 +220,7 @@ This program count unique ip-address from file. File can be large like <code><a 
                 </p>
             </li>
             <li>
-                <span style="background: darkblue"><b>-read='</b><i><b>LINE</b> or <b>BLOCK</b></i><b>'</b></span>
+                <code><b>-read='</b><i><b>LINE</b> or <b>BLOCK</b></i><b>'</b></code>
                 <p>
                     LINE - read file by lines, optimal speed and resources usage <i>[default]</i>
                 </p>
@@ -225,20 +229,20 @@ This program count unique ip-address from file. File can be large like <code><a 
                 </p>
             </li>
             <li>
-                <span style="background: darkblue"><b>-bs='</b><i>123456</i><b>'</b></span>
+                <code><b>-bs='</b><i>123456</i><b>'</b></code>
                 <p>
                     Set <u>block_size</u>. You can add letter 'k', 'm', 'g' at the end for set size. <i>[default = 8mb]</i>
                 </p>
             </li>
             <li>
-                <span style="background: darkblue"><b>-out='</b><i>/path/to/your/file</i><b>'</b></span>
+                <code><b>-out='</b><i>/path/to/your/file</i><b>'</b></code>
                 <p>
                     Set output file for save unique ip result in unpacked format like "127.0.0.1". Be careful, result 
                     can be large and you need enough space  
                 </p>
             </li>
             <li>
-                <span style="background: darkblue"><b>-chk</b></span>
+                <code><b>-chk</b></code>
                 <p>
                     This argument <u>switch on</u> checking ip addresses. <i>[default = false (switched off)]</i>
                 </p>
