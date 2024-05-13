@@ -26,12 +26,12 @@ This program count unique ip-address from file. File can be large like <code><a 
                     <div>
                         <div style="background: #20200b">
                             <span style="color: green">
-                                <b>1.1.1.1
+                                <b><i>1.1.1.1
                                 </br>2.2.2.2
-                                </br>3.3.3.3</b></span>
+                                </br>3.3.3.3</i></b></span>
                                 </br><span style="color: pink">1.1.1.1</span>
                         </div>
-                        Answer is <b>3</b>.
+                        Answer is <b>3</b> (1.1.1.1, 2.2.2.2, 3.3.3.3).
                     </div>
                 </li>
                 <li>
@@ -39,11 +39,11 @@ This program count unique ip-address from file. File can be large like <code><a 
                     <div>
                         <div style="background: #20200b">
                             <span style="color: pink">1.1.1.1</span>
-                            </br><span style="color: green"><b>2.2.2.2
-                            </br>3.3.3.3</b></span>
+                            </br><span style="color: green"><b><i>2.2.2.2
+                            </br>3.3.3.3</i></b></span>
                             </br><span style="color: pink">1.1.1.1</span>
                         </div>
-                        Answer is <b>2</b>.
+                        Answer is <b>2</b> (2.2.2.2, 3.3.3.3; 1.1.1.1 contained twice, so it's not unique).
                     </div>
                 </li>
             </ul>
